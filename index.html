@@ -226,13 +226,82 @@
     <script>
        
     $(document).ready(function(){
-         document.getElementById("btnguardar").onclick = AgregarFila;
+
+             
+            /*const datosfijos =[
+            [1, "Juan", "Lopez", "Orozco", new Date('2-2-98').toLocaleDateString(), "Tepeaca", "5478123265", "Juan@gmail.com"],
+            [2, "Pedro", "Romero", "Meneses", new Date('12-12-08').toLocaleDateString(), "Puebla", "4894589478", "Pedro@gmail.com"]
+            ]
+            
+            let numero=datosfijos[0];
+            let nombre=datosfijos[1];
+            let apellidop=datosfijos[2];
+            let apellidom=datosfijos[3];
+            let fecha=datosfijos[4]; 
+            let direccion=datosfijos[5];
+            let telefono=datosfijos[6];
+            let correo=datosfijos[7];
+
+              var row = table.insertRow(1);
+            var cell1 = row.insertCell(0);
+             var cell2 = row.insertCell(1);
+             var cell3 = row.insertCell(2);
+            var cell4 = row.insertCell(3);
+            var cell5 = row.insertCell(4);
+            var cell6 = row.insertCell(5);
+            var cell7 = row.insertCell(6);
+            var cell8 = row.insertCell(7);
+             
+
+            cell1.innerHTML = numero;
+            cell2.innerHTML = nombre;
+            cell3.innerHTML = apellidop;
+            cell4.innerHTML = apellidom;
+            cell5.innerHTML = fecha;
+            cell6.innerHTML = direccion;
+            cell7.innerHTML = telefono;
+            cell8.innerHTML = correo;
+
+             console.log(datosfijos[i][j]);
+            
+            */
+        
+            const datosfijos =[
+            [1, "Juan", "Lopez", "Orozco", new Date('2-2-98').toLocaleDateString(), "Tepeaca", "5478123265", "Juan@gmail.com"],
+            [2, "Pedro", "Romero", "Meneses", new Date('12-12-08').toLocaleDateString(), "Puebla", "4894589478", "Pedro@gmail.com"],
+            [3, 'Pedro', 'Romero', 'Meneses', '12/12/2008', 'Puebla', '4894589478', 'Pedro@gmail.com']
+            ]            
+            let table = document.getElementById("Tabla1"); 
+            
+            let text = "";
+            for(let i = 0; i < datosfijos.length; i++){
+                console.log(datosfijos[i]);
+                let row = table.insertRow(i+1);
+                for (let j = 0;  j < datosfijos[i].length; j++) {
+                   
+                    let dato = datosfijos[i][j];
+                    let cell = row.insertCell(j);
+                    cell.innerHTML = dato;
+                    
+                }
+                
+                }
+
+          
+            
+
+             
+
+
+           
+               
     }
     );
 
- 
-
+    
+    document.getElementById("btnguardar").onclick = AgregarFila;
 function AgregarFila() {
+    
   var table = document.getElementById("Tabla1");
 
         var num= 1 ;
