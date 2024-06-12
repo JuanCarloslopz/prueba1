@@ -129,7 +129,7 @@
                     </div>
                     <div class="modal-footer">
                       <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                      <button id="btnguardar" onclick="" type="button" class="btn btn-primary">Guardar</button>
+                      <button id="btnguardar" onclick="AgregarFila()" type="button" class="btn btn-primary">Guardar</button>
                     </div>
                   </div>
                 </div>
@@ -205,7 +205,7 @@
                     </div>
                     <div  class="modal-footer">
                       <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                      <button id="btneditar" onclick="" type="button" class="btn btn-primary">Guardar</button>
+                      <button id="btneditar" onclick="editar()" type="button" class="btn btn-primary">Guardar</button>
                     </div>
                   </div>
                 </div>
@@ -248,19 +248,16 @@
               "telefono" : 6842866565,
               "correo" : "Susana@gmail.com",
             }]
-       var nfilas = clientes.length; 
-
-       console.log("tengo" + nfilas + "filas");    
-
+       
         $(document).ready(function(){
                        
             let table = document.getElementById("Tabla1"); 
             for (let i = 0; i < clientes.length; i++) {
 
-              var row = table.insertRow(i+1);
-              //console.log(row);
-              
+              var row = table.insertRow(-1);
+              row.id ='tr-'+ clientes[i].id;
               var fila = clientes[i];
+              var idfila = fila.id;
               
               var cell1 = row.insertCell(0);
               var cell2 = row.insertCell(1);
@@ -272,12 +269,9 @@
               var cell8 = row.insertCell(7);
               var cell9 = row.insertCell(8);
               
-
-              var edit='<i onclick="editar('+fila.id+')" style="margin: 0px 16px; color: green;" class="bi bi-pencil" type="button"  data-bs-toggle="modal" data-bs-target="#editar"></i>';
-              var Bor= '<i type="button" style="color: red;" class="borrar bi bi-trash" data-bs-toggle="modal" data-bs-target="#eliminar"></i>';
-              
-
-    
+              var edit='<i onclick="obtenerClienteById('+idfila+')" style="margin: 0px 16px; color: green;" class="bi bi-pencil" type="button"></i>';
+              var Bor= '<i onclick="eliminarFila('+idfila+')" type="button" id="btnborrar" style="color: red;" class="borrar bi bi-trash" data-bs-toggle="modal" data-bs-target="#eliminar"></i>';
+                 
               cell1.innerHTML = fila.id;
               cell2.innerHTML = fila.nombre;
               cell3.innerHTML = fila.appaterno;
@@ -294,19 +288,19 @@
     );
      
     // inicio de funcion AgregarFila
-
+          
+      var nfilas = clientes.length;
     
-       
-     document.getElementById("btnguardar").onclick = AgregarFila;
-     function contador(params) {
-        
-      }
-
       function AgregarFila() {
-    
-      var table = document.getElementById("Tabla1");
 
-        var num= nfilas +1 ;
+        nfilas++
+        var table2 = document.getElementById("Tabla1");
+
+        var row2 = table2.insertRow(-1);
+        row2.id ='tr-'+ nfilas;
+                      
+        var id= nfilas;
+        var idfila=id;
         var Nom= $("#Nombre").val();
         var ApP= $("#Ap_Patreno").val();
         var ApM= $("#Ap_Materno").val();
@@ -314,33 +308,32 @@
         var Dir= $("#Direccio").val();
         var Fc= $("#F_Nacimiento").val();
         var Tel= $("#Telefono").val();
+        const nuevoObj={id: id , nombre: Nom , appaterno: ApP , apmaterno: ApM , fecha: Fc , direccion: Dir , telefono: Tel , correo : Cor , };
+        clientes.push(nuevoObj);
+        console.log(Nom);
+        var edit='<i onclick="obtenerClienteById('+idfila+')" style="margin: 0px 16px; color: green;" class="bi bi-pencil" type="button"></i>';
+        var Bor= '<i onclick="eliminarFila('+idfila+')" type="button" id="btnborrar" style="color: red;" class="borrar bi bi-trash" data-bs-toggle="modal" data-bs-target="#eliminar"></i>';
 
+        var cell1 = row2.insertCell(0);
+        var cell2 = row2.insertCell(1);
+        var cell3 = row2.insertCell(2);
+        var cell4 = row2.insertCell(3);
+        var cell5 = row2.insertCell(4);
+        var cell6 = row2.insertCell(5);
+        var cell7 = row2.insertCell(6);
+        var cell8 = row2.insertCell(7);
+        var cell9 = row2.insertCell(8);
         
-        var edit='<i style="margin: 0px 16px; color: green;" class="bi bi-pencil" type="button"  data-bs-toggle="modal" data-bs-target="#editar"></i>';
-        var Bor= '<i type="button" style="color: red;" class="borrar bi bi-trash" data-bs-toggle="modal" data-bs-target="#eliminar"></i>';
-
-        var row = table.insertRow(1);
-        var cell1 = row.insertCell(0);
-        var cell2 = row.insertCell(1);
-        var cell3 = row.insertCell(2);
-        var cell4 = row.insertCell(3);
-        var cell5 = row.insertCell(4);
-        var cell6 = row.insertCell(5);
-        var cell7 = row.insertCell(6);
-        var cell8 = row.insertCell(7);
-        var cell9 = row.insertCell(8);
-        
-        cell1.innerHTML = num;
+        cell1.innerHTML = id;
         cell2.innerHTML = Nom;
         cell3.innerHTML = ApP;
         cell4.innerHTML = ApM;
-        cell5.innerHTML = Cor;
+        cell5.innerHTML = Fc;
         cell6.innerHTML = Dir;
-        cell7.innerHTML = Fc;
-        cell8.innerHTML = Tel;
+        cell7.innerHTML = Tel;
+        cell8.innerHTML = Cor;
         cell9.innerHTML = [edit + "   " + Bor];
   
-
         document.getElementById("Nombre").value = "";
         document.getElementById("Ap_Patreno").value = "";
         document.getElementById("Ap_Materno").value = "";
@@ -350,18 +343,18 @@
         document.getElementById("Telefono").value = "";
 
         $('#añadir').modal('hide')
-  
+               
 }
 
-    // inicio de funcion editar
+    // inicio de funcion encontrar id
 
-    document.getElementById("btneditar").onclick = editar;
+   
     
-      function editar(id) {
-      console.log("este es mi id "+ id);
+      function obtenerClienteById(idfila) {
+      //console.log("este es mi id "+ idfila);
       
       
-      const result = clientes.find(({ id }) => id === id);
+      const result = clientes.find(({ id }) => id == idfila);
       $("#ENombre").val(result.nombre);
       $("#EAp_Patreno").val(result.appaterno);
       $("#EAp_Materno").val(result.apmaterno);
@@ -369,40 +362,55 @@
       $("#EDireccion").val(result.direccion);
       $("#ETelefono").val(result.telefono);
       $("#ECorreo").val(result.correo);
-
-      $('#editar').modal('hide')
+        
+      $('#editar').modal('show');
       console.log(result);
-    
+      $("#btneditar").attr("onclick", 'editar('+idfila+')' );
     }
-
-   
 
     // inicio de funcion borrar
 
+    function editar(idfila) {
+        console.log("dentro de la funcion");
+        console.log( clientes[idfila-1]);
+        var fila = clientes[idfila-1];
 
-    $(document).on('click', '.borrar', function(event) {
-     event.preventDefault();
-    $(this).closest('tr').remove();
-    });
+        var Nom = $("#ENombre").val();
+        var ApP = $("#EAp_Patreno").val();
+        var ApM = $("#EAp_Materno").val();
+        var Cor = $("#ECorreo").val();
+        var Dir = $("#EDireccio").val();
+        var Fc = $("#EF_Nacimiento").val();
+        var Tel = $("#ETelefono").val();
+        
+           fila.nombre = Nom; 
+           fila.appaterno = ApP;
+            fila.apmaterno = ApM;
+            fila.correo = Cor;
+            fila.direccion = Dir;
+            fila.fecha = Fc;
+            fila.telefono = Tel;
+            console.log( clientes[idfila-1]);
 
-     /* function borrar(id) {
-      console.log("este es mi id "+ id);
+       
+        
+        
+       
+
+      
+     
       
       
-      const result = clientes.find(({ id }) => id === id);
-      $("#ENombre").val("");
-      $("#EAp_Patreno").val("");
-      $("#EAp_Materno").val("");
-      $("#EFecha").val("");
-      $("#EDireccion").val("");
-      $("#ETelefono").val("");
-      $("#ECorreo").val("");
-      document.getElementById("Tabla1").deleteRow(id);
-      
-      console.log(result);
-   
+
     }
-      */
+   
+    // inicio de funcion borrar
+ 
+    function eliminarFila(id) {
+    $('#tr-'+ id).remove();
+    }
+
+     
       </script>
     </body>
 </html>
