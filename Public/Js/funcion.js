@@ -1,39 +1,25 @@
-
-
-
-let clientes =[{
-    "id": 1 ,
-    "nombre":  "Juan",
-    "appaterno":  "Lopez",
-    "apmaterno": "Orozco",
-    "fecha" : new Date('02/02/1998').toLocaleDateString(),
-    "direccion" : "Tepeaca",
-    "telefono" : 5478123265,
-    "correo" : "Juan@gmail.com",
-  },
-  {   
-    "id": 2 ,
-    "nombre":  "Pedro",
-    "appaterno":  "Pinos",
-    "apmaterno": "Garcia",
-    "fecha" :"1998-02-02" ,
-    "direccion" : "Puebla",
-    "telefono" : 6518446512,
-    "correo" : "Pedro@gmail.com",
-  },
-  {   
-    "id": 3 ,
-    "nombre":  "Susana",
-    "appaterno":  "Lara",
-    "apmaterno": "Puga",
-    "fecha" :"2000-12-09" ,
-    "direccion" : "Puebla",
-    "telefono" : 6842866565,
-    "correo" : "Susana@gmail.com",
-  }]
+class datosCliente {
+    constructor(id, nombre, appaterno, apmaterno, fecha, telefono, correo) {
+        this.id = id;
+        this.nombre = nombre;
+        this.appaterno = appaterno;
+        this.apmaterno = apmaterno;
+        this.fecha = fecha;
+        this.telefono = telefono;
+        this.correo = correo;
+    }
+}
+   
+        const cliente1 = new datosCliente(1, 'Juan', 'Lopez', 'Orozco', new Date('02/02/1998').toLocaleDateString(), 'Tepeaca', 5478123265, 'Juan@gmail.com');
+        const cliente2 = new datosCliente(2, 'Pedro', 'Pinos', 'Garcia', '2000-12-09', 'Puebla', 6518446512, 'Pedro@gmail.com');
+        const cliente3 = new datosCliente(3, 'Susana', 'Lara', 'Puga', '2000-12-09', 'Tepeaca', 5478123265, 'Susana@gmail.com');
+        const clientes = [cliente1, cliente2,cliente3];
+       
 
 $(document).ready(function(){
-             
+        
+   
+
   let table = document.getElementById("Tabla1"); 
   for (let i = 0; i < clientes.length; i++) {
 
@@ -159,7 +145,7 @@ var idfila = data.idcliente;
 
 
 console.log("dentro de la funcion" + idfila);
-/*console.log( clientes[idfila-1]);
+console.log( clientes[idfila-1]);
 var fila = clientes[idfila-1];
 
 var Nom = $("#ENombre").val();
@@ -177,7 +163,7 @@ var Tel = $("#ETelefono").val();
   fila.direccion = Dir;
   fila.fecha = Fc;
   fila.telefono = Tel;
-  console.log( clientes[idfila-1]);*/
+  console.log( clientes[idfila-1]);
 
 
 
@@ -196,5 +182,3 @@ var Tel = $("#ETelefono").val();
 function eliminarFila(id) {
 $('#tr-'+ id).remove();
 }
-
-
